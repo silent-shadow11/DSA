@@ -1,21 +1,36 @@
-name: C/C++ CI
+name: Run Selected C++ File
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      filename:
+        description: 'Enter C++ file name (e.g. main.cpp)'
+        required: true
+        default: 'main.cpp'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+    - uses: actions/checkout@v3
 
-      - name: Show files
-        run: ls -la
+    - name: Show files (debug)
+      run: ls -R
 
-      - name: Compile
-        run: g++ *.cpp -o main
+    - name: Compile and Run
+      run: |
+        FILE="${{ github.event.inputs.filename }}"
+        
+        echo "Selected file: $FILE"
 
-      - name: Run
-        run: ./main
+        if [ ! -f "$FILE" ]; then
+          echo "❌ Error: File not found!"
+          exit 1
+        fi
+
+        echo "✅ Compiling $FILE"
+        g++ -std=c++17 "$FILE" -o main || { echo "❌ Compilation failed"; exit 1; }
+
+        echo "🚀 Running program"
+        ./main
