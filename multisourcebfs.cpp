@@ -58,3 +58,27 @@ public:
         return ans;
     }
 };
+int main()
+{
+    int n = 3;
+    int m = 3;
+
+    vector<vector<int>> sources = {
+        {0, 0, 1},
+        {2, 2, 2}};
+
+    Solution obj;
+    vector<vector<int>> result = obj.colorGrid(n, m, sources);
+
+    // print result
+    for (auto &row : result)
+    {
+        for (auto &cell : row)
+        {
+            cout << cell << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
