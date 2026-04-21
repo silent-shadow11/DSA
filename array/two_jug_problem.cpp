@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include <algorithm>
 using namespace std;
 
@@ -59,3 +61,13 @@ public:
         return min(pour(m, n, d), pour(n, m, d));
     }
 };
+
+int main()
+{
+    Solution obj;
+
+    int m = 3, n = 5, d = 4;
+    cout << obj.minSteps(m, n, d) << endl;
+
+    return 0;
+}
